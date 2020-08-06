@@ -60,6 +60,15 @@ export default () => (
       body {
         font-family: sans-serif;
       }
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: white;
+          background-color: #202023;
+        }
+        a {
+          color: #3cc6e6;
+        }
+      }
     `}</style>
     <style jsx>{`
       h1, .question .q {
