@@ -46,7 +46,7 @@ export default () => (
         <div className="question">
           <p className="q">Where u at?</p>
           <div className="a">
-            Probebly somewhere <a href="https://www.google.com/maps/place/Groningen/@53.1981098,6.3593701,9.5z/data=!4m5!3m4!1s0x47c9c27b376202ab:0xf24577154131aa51!8m2!3d53.2887213!4d6.7060867">here in Groningen the in the Neterlands</a>
+            Probebly somewhere <a href="https://www.google.com/maps/place/Groningen/@53.1981098,6.3593701,9.5z/data=!4m5!3m4!1s0x47c9c27b376202ab:0xf24577154131aa51!8m2!3d53.2887213!4d6.7060867">here in Groningen in the Neterlands</a>
           </div>
         </div>
       </div>
