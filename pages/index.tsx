@@ -25,8 +25,7 @@ export default () => (
         <div className="question">
           <p className="q">Hobby project?</p>
           <div className="a">
-            Currently i'm building a compiler called <a href="https://github.com/talpalang/talpa">talpa</a> that can compile talpa code into js, golang, etc.
-            It's writting in rust mainly to better understand rust and for the speed advantage rust has over other languages.
+            Currently i'm building a selfhosted cloud that i'll keep private until i have something to showoff :).
           </div>
         </div>
         <div className="question">
