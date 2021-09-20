@@ -1,9 +1,9 @@
-import NextHead from 'next/head';
+import Head from 'next/head';
 
 export default function Home() {
   return (
     <div>
-      <NextHead>
+      <Head>
         <meta charSet="UTF-8" />
         <title>Mark Kopenga</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,8 +11,8 @@ export default function Home() {
         <meta property="og:url" content="https://mkopenga.com" />
         <meta property="og:title" content="Mark Kopenga" />
         <meta property="og:description" content="A website about me" />
-        <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;1,700&display=swap" rel="stylesheet"></link>
-      </NextHead>
+        <link href="https://fonts.googleapis.com/css2?family=Recursive:wght,CASL@300..800,0..1&display=swap" rel="stylesheet" />
+      </Head>
 
       <div className="top">
         <div className="center">
@@ -20,12 +20,6 @@ export default function Home() {
             <h1>Hey reader</h1>
             <div>
               I’m a <s>still</s> forever learning developer who is interested in complicated systems.
-            </div>
-          </div>
-          <div className="question">
-            <p className="q">Hobby project?</p>
-            <div className="a">
-              Currently i'm building a selfhosted cloud that i'll keep private until i have something to showoff :).
             </div>
           </div>
           <div className="question">
@@ -60,6 +54,7 @@ export default function Home() {
         }
         body {
           font-family: sans-serif;
+          font-size: 18px;
         }
         a {
           color: rgb(72, 19, 147);
@@ -70,7 +65,7 @@ export default function Home() {
         @media (prefers-color-scheme: dark) {
           body {
             color: white;
-            background-color: #202023;
+            background-color: #141416;
           }
           a {
             color: #3cc6e6;
@@ -79,9 +74,14 @@ export default function Home() {
       `}</style>
       <style jsx>{`
         h1, .question .q {
-          font-family: 'Tinos', serif;
+          font-family: 'Recursive', monospace;
           font-weight: 800;
           padding-bottom: 6px;
+          font-variation-settings: 'CASL' 0.6;
+          font-size: 2rem;
+        }
+        h1 {
+          font-size: 2.6rem;
         }
         .top {
           display: flex;
@@ -98,10 +98,7 @@ export default function Home() {
           padding-bottom: 30px;
         }
         .into div, .question div {
-          font-size: 17px;
-        }
-        .question .q {
-          font-size: 25px;
+          font-size: 1rem;
         }
       `}</style>
     </div>
