@@ -16,35 +16,50 @@ export default function Home() {
                 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@900&display=swap" rel="stylesheet" />
             </Head>
 
-            <div className="section into">
-                <h1>Hello,</h1>
-                <p>I’m Mark a <s>still</s> forever learning developer who's interested in everything complex :^)</p>
-            </div>
+            <Section
+                title="Hello,"
+                titleFontSizeVW={30}
+                backgroundColor="rgb(224, 206, 250)"
+                titleColor="rgb(91, 2, 91)"
+            >
+                <SectionP>I’m Mark a <s>still</s> forever learning developer who's interested in everything complex :^)</SectionP>
+            </Section>
 
-            <div className="section projects">
-                <h1>Projects</h1>
-                <p>Here is a project i'm proud off</p>
+            <Section
+                title="Projects"
+                backgroundColor="rgb(208, 254, 230)"
+                titleColor="rgb(0, 68, 33)"
+            >
+                <SectionP paddingTop="2vw">Here is a project i'm proud off</SectionP>
                 <div className="projectsList">
-                    <a href="https://github.com/mjarkk/go-graphql">
+                    <a className="aProject" href="https://github.com/mjarkk/go-graphql">
                         <h3>Graphql library for GoLang</h3>
                         <p>An attempt to create a GraphQL server library for Go using some different ideas than other Go GraphQL libraries</p>
                     </a>
                 </div>
-                <p>For other projects visit my github page: <a href="https://github.com/mjarkk">@mjarkk</a></p>
-            </div>
+                <SectionP paddingTop="2vw">For other projects visit my github page: <a href="https://github.com/mjarkk">@mjarkk</a></SectionP>
+            </Section>
 
-            <div className="section whereUAt">
-                <h1>Where am I?</h1>
-                <p>Probably somewhere <a href="https://www.google.com/maps/place/Groningen/@53.1981098,6.3593701,9.5z/data=!4m5!3m4!1s0x47c9c27b376202ab:0xf24577154131aa51!8m2!3d53.2887213!4d6.7060867">here in Groningen in the Neterlands</a></p>
-            </div>
+            <Section
+                title="Where am I?"
+                backgroundColor="rgb(240, 218, 171)"
+                titleColor="rgb(91, 64, 21)"
+                titleFontSizeVW={17}
+            >
+                <SectionP>Probably somewhere in <a href="https://www.google.com/maps/place/Groningen/@53.1981098,6.3593701,9.5z/data=!4m5!3m4!1s0x47c9c27b376202ab:0xf24577154131aa51!8m2!3d53.2887213!4d6.7060867">Groningen in the Neterlands</a></SectionP>
+            </Section>
 
-            <div className="section social">
-                <h1>Social</h1>
+            <Section
+                title="Social"
+                backgroundColor="rgb(255, 198, 210)"
+                titleColor="rgb(113, 14, 35)"
+                titleFontSizeVW={23}
+            >
                 <ul>
                     <li><a href="https://github.com/mjarkk">Github / mjarkk</a></li>
                     <li><a href="mailto:mkopenga@gmail.com">mkopenga@gmail.com</a></li>
                 </ul>
-            </div>
+            </Section>
 
             <style jsx>{`
                 h1 {
@@ -66,31 +81,10 @@ export default function Home() {
                     margin: 0 -3vw;
                 }
                 .section > p {
-                    padding: 0 5vw 0 10vw;
                     font-size: min(max(1.5rem, 2.5vw), 3rem);
-                }
-                .into {
-                    background-color: rgb(224, 206, 250);
-                }
-                .into h1 {
-                    color: rgb(91, 2, 91);
-                    font-size: 30vw;
-                }
-                .projects {
-                    background-color: rgb(208, 254, 230);
-                }
-                .projects h1 {
-                    color: rgb(0, 68, 33);
-                }
-                .projects > p {
-                    padding-top: 2vw;
-                }
-                .projectsList {
-                    padding: 0 5vw 0 10vw;
                 }
                 .projectsList a {
                     border-left: 10px solid rgb(0, 68, 33);
-                    color: black;
                     display: block;
                     max-width: 500px;
                     text-decoration: none;
@@ -109,22 +103,7 @@ export default function Home() {
                 .projectsList a:hover h3 {
                     text-decoration: underline;
                 }
-                .whereUAt {
-                    background-color: rgb(240, 218, 171);
-                }
-                .whereUAt h1 {
-                    color: rgb(91, 64, 21);
-                    font-size: 17vw;
-                }
-                .social {
-                    background-color: rgb(255, 198, 210);
-                }
-                .social h1 {
-                    color: rgb(113, 14, 35);
-                    font-size: 23vw;
-                }
-                .social ul {
-                    padding: 0 5vw 0 10vw;
+                ul {
                     font-size: min(max(1.5rem, 2.5vw), 3rem);
                 }
             `}</style>
@@ -141,7 +120,7 @@ export default function Home() {
                     font-weight: bold;
                 }
                 a {
-                    color: rgb(72, 19, 147);
+                    color: black;
                 }
                 ul {
                     list-style: inside;
@@ -159,3 +138,44 @@ export default function Home() {
         </div>
     )
 };
+
+interface SectionProps {
+    children?: React.ReactNode
+    title: string
+    backgroundColor: string
+    titleColor: string
+    titleFontSizeVW?: number
+}
+
+export function Section({ titleFontSizeVW, children, title, backgroundColor, titleColor }: SectionProps) {
+    return (
+        <div className="section" style={{ backgroundColor: backgroundColor }}>
+            <h1 style={{ color: titleColor, fontSize: `${titleFontSizeVW || 20}vw` }}>{title}</h1>
+            <div className="content">{children}</div>
+            <style jsx>{`
+                h1 {
+                    font-family: 'Kanit', sans-serif;
+                    font-wieght: 900;
+                    line-height: 1;
+                    margin: 0 -3vw;
+                }
+                .section {
+                    padding: 20vh 0;
+                    min-height: 90vh;
+                    box-sizing: border-box;
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    overflow: hidden;
+                }
+                .content {
+                    padding: 0 5vw 0 10vw;
+                }
+            `}</style>
+        </div>
+    )
+}
+
+export function SectionP({ children, paddingTop }: { children: React.ReactNode, paddingTop?: string }) {
+    return <p style={{ fontSize: "min(max(1.5rem, 2.5vw), 3rem)", paddingTop }}>{children}</p>
+}
