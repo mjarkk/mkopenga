@@ -31,12 +31,10 @@ export default function Home() {
                 titleColor="rgb(0, 68, 33)"
             >
                 <SectionP paddingTop="2vw">Here is a project i'm proud off</SectionP>
-                <div className="projectsList">
-                    <a className="aProject" href="https://github.com/mjarkk/go-graphql">
-                        <h3>Graphql library for GoLang</h3>
-                        <p>An attempt to create a GraphQL server library for Go using some different ideas than other Go GraphQL libraries</p>
-                    </a>
-                </div>
+                <a className="aProject" href="https://github.com/mjarkk/go-graphql">
+                    <h3>Graphql library for GoLang</h3>
+                    <p>An attempt to create a GraphQL server library for Go using some different ideas than other Go GraphQL libraries</p>
+                </a>
                 <SectionP paddingTop="2vw">For other projects visit my github page: <a href="https://github.com/mjarkk">@mjarkk</a></SectionP>
             </Section>
 
@@ -56,7 +54,7 @@ export default function Home() {
                 titleFontSizeVW={23}
             >
                 <ul>
-                    <li><a href="https://github.com/mjarkk">Github / mjarkk</a></li>
+                    <li><a href="https://github.com/mjarkk">Github @mjarkk</a></li>
                     <li><a href="mailto:mkopenga@gmail.com">mkopenga@gmail.com</a></li>
                 </ul>
             </Section>
@@ -80,10 +78,7 @@ export default function Home() {
                 .section > h1 {
                     margin: 0 -3vw;
                 }
-                .section > p {
-                    font-size: min(max(1.5rem, 2.5vw), 3rem);
-                }
-                .projectsList a {
+                .aProject {
                     border-left: 10px solid rgb(0, 68, 33);
                     display: block;
                     max-width: 500px;
@@ -91,16 +86,16 @@ export default function Home() {
                     padding: 5px 10px 15px 10px;
                     margin-top: 10px;
                 }
-                .projectsList h3 {
+                .aProject h3 {
                     font-size: 2.4rem;
                     font-family: 'Kanit', sans-serif;
                     font-wieght: 900;
                 }
-                .projectsList p {
+                .aProject p {
                     font-size: 1.1rem;
                     padding-left: 15px;
                 }
-                .projectsList a:hover h3 {
+                .aProject:hover h3 {
                     text-decoration: underline;
                 }
                 ul {
