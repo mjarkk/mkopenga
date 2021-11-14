@@ -112,14 +112,14 @@ interface SectionProps {
 export function Section({ titleFontSizeVW, children, title, backgroundColor, titleColor }: SectionProps) {
     return (
         <div className="section" style={{ backgroundColor: backgroundColor }}>
-            <h1 style={{ color: titleColor, fontSize: `${titleFontSizeVW || 20}vw` }}>{title}</h1>
+            <h1 style={{ color: titleColor, fontSize: `min(${titleFontSizeVW || 20}vw, 50vh)` }}>{title}</h1>
             <div className="content">{children}</div>
             <style jsx>{`
                 h1 {
                     font-family: 'Kanit', sans-serif;
                     font-wieght: 900;
                     line-height: 1;
-                    margin: 0 -3vw;
+                    margin: 0 max(-5vh, -4vw);
                 }
                 .section {
                     padding: 20vh 0;
