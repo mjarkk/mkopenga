@@ -1,4 +1,4 @@
-const { readFileSync } = require('fs')
+const { readFileSync, writeFileSync } = require('fs')
 
 const provinces = JSON.parse(readFileSync('./provinces-netherlands.json'))
 
@@ -12,11 +12,22 @@ let highestLngProvince = undefined
 let lowestLng = undefined
 let lowestLngProvince = undefined
 
-provinces.features.map(province => {
+provinces.features = provinces.features.map(province => {
     const provName = province.properties.PROV_NAAM
+
+    const formatMethod = ([lat, lng]) => {
+        return [
+            lat * .0000145 + 3.16, // change width and move to right
+            lng * .00000895 + 48.005, // change height and move to top
+        ]
+    }
+
     let flattentList = province.geometry.coordinates.flat()
-    if (typeof flattentList[0][0] != 'number') {
+    if (typeof flattentList[0][0] == 'number') {
+        province.geometry.coordinates = province.geometry.coordinates.map(l1 => l1.map(formatMethod))
+    } else {
         flattentList = flattentList.flat()
+        province.geometry.coordinates = province.geometry.coordinates.map(l1 => l1.map(l2 => l2.map(formatMethod)))
     }
 
     flattentList.map(coordinate => {
@@ -40,10 +51,21 @@ provinces.features.map(province => {
             lowestLngProvince = provName
         }
     })
+
+    return province
 })
 
-console.log(lowestLatProvince, lowestLngProvince)
-console.log(highestLatProvince, highestLngProvince)
 
-console.log(lowestLat, lowestLng)
-console.log(highestLat, highestLng)
+provinces.features.map(province => {
+    const first = province.geometry.coordinates[0][0]
+    const res = (typeof first[0] == 'number') ? first : first[0];
+    console.log(province.properties.PROV_NAAM, res)
+})
+console.log()
+
+console.log('lat', lowestLat, lowestLatProvince)
+console.log('lng', lowestLng, lowestLngProvince)
+console.log('lat', highestLat, highestLatProvince)
+console.log('lng', highestLng, highestLngProvince)
+
+writeFileSync('formatted_correct_nl_province_coordinates.geojson', JSON.stringify(provinces), { encoding: 'utf8' })
