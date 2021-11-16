@@ -68,4 +68,4 @@ console.log('lng', lowestLng, lowestLngProvince)
 console.log('lat', highestLat, highestLatProvince)
 console.log('lng', highestLng, highestLngProvince)
 
-writeFileSync('formatted_correct_nl_province_coordinates.geojson', JSON.stringify(provinces), { encoding: 'utf8' })
+writeFileSync('./correct-provinces-netherlands.geojson', JSON.stringify(provinces), { encoding: 'utf8' })
