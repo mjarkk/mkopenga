@@ -1,24 +1,19 @@
 const slugify = str => {
-    str = str.replace(/^\s+|\s+$/g, '');
-
-    // Make the string lowercase
-    str = str.toLowerCase();
+    // Trim spaces and make the string lowercase
+    str = str.replace(/^\s+|\s+$/g, '').toLowerCase();
 
     // Remove accents, swap ñ for n, etc
-    var from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
-    var to = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
-    for (var i = 0, l = from.length; i < l; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    const from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
+    const to = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
+    for (let i = 0, l = from.length; i < l; i++) {
+        const replace = from.charAt(i)
+        const replaceWith = to.charAt(i)
+        str = str.replace(new RegExp(replace, 'g'), replaceWith);
     }
 
-    // Remove invalid chars
-    str = str.replace(/[^a-z0-9 -]/g, '')
-        // Collapse whitespace and replace by -
-        .replace(/\s+/g, '-')
-        // Collapse dashes
-        .replace(/-+/g, '-');
-
-    return str;
+    return str.replace(/[^a-z0-9 -]/g, '') // Remove invalid chars
+        .replace(/\s+/g, '-') // Collapse whitespace and replace by -
+        .replace(/-+/g, '-') // Collapse dashes
 }
 
 const europeCountries = [
