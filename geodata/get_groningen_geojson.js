@@ -24,6 +24,9 @@ const resultJson = {
         {
             type: 'Feature',
             id: 'groningen',
+            properties: {
+                NAME: 'groningen',
+            },
             geometry: geoData,
         }
     ]
