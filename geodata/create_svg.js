@@ -109,7 +109,7 @@ lines.map(({ line }) =>
 height = maxY - minY
 width = maxX - minX
 
-// Create the svg file
+// Create map.json
 
 const lineGroups = lines.reduce((acc, entry) => {
     const { id, line, thickness } = entry
@@ -127,6 +127,8 @@ writeFileSync('./map.json', JSON.stringify({
     width,
     lineGroups,
 }), { encoding: 'utf8' })
+
+// Create the map.svg
 
 const linesStrings = Object.entries(lineGroups).map(([id, { lines, thickness }]) => {
     const groupContent = lines.map((points) => {
