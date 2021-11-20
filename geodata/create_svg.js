@@ -43,6 +43,16 @@ JSON.parse(readFileSync('./correct-provinces-netherlands.geojson')).features.map
     })
 })
 
+JSON.parse(readFileSync('./groningen.geojson')).features.map(f => {
+    f.geometry.coordinates.map(area => {
+        if (typeof area[0][0] == 'number') {
+            drawLine(area)
+        } else {
+            throw 'heu?'
+        }
+    })
+})
+
 // Filter out junk
 // Note that the map is inverted, so top = bottom and bottom is top
 // Left and right are correct tough
