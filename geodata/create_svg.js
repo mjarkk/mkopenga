@@ -111,25 +111,25 @@ width = maxX - minX
 
 // Create the svg file
 
-const lineGroups = lines.reduce((acc, line) => {
-    if (acc[line.id] === undefined) { acc[line.id] = [line] }
-    else acc[line.id].push(line)
+const lineGroups = lines.reduce((acc, entry) => {
+    const { id, line, thickness } = entry
+
+    const points = line.map(({ x, y }) => `${x - minX},${height - (y - minY)}`).join(' ')
+
+    if (acc[id] === undefined) { acc[id] = { lines: [points], thickness } }
+    else acc[id].lines.push(points)
+
     return acc
 }, {})
 
 writeFileSync('./map.json', JSON.stringify({
     height,
     width,
-    maxY,
-    maxX,
-    minY,
-    minX,
     lineGroups,
 }), { encoding: 'utf8' })
 
-const linesStrings = Object.entries(lineGroups).map(([id, lines]) => {
-    const groupContent = lines.map(({ line, thickness }) => {
-        const points = line.map(({ x, y }) => `${x - minX},${height - (y - minY)}`).join(' ')
+const linesStrings = Object.entries(lineGroups).map(([id, { lines, thickness }]) => {
+    const groupContent = lines.map((points) => {
         return `<polyline points="${points}" style="fill:none;stroke:black;stroke-width:${thickness}" />`
     }).join('\n')
     return `<g id="${id}">${groupContent}</g>`
