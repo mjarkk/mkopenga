@@ -117,6 +117,12 @@ const lineGroups = lines.reduce((acc, line) => {
     return acc
 }, {})
 
+writeFileSync('./map.json', JSON.stringify({
+    height,
+    width,
+    lineGroups,
+}), { encoding: 'utf8' })
+
 const linesStrings = Object.entries(lineGroups).map(([id, lines]) => {
     const groupContent = lines.map(({ line, thickness }) => {
         const points = line.map(({ x, y }) => `${x - minX},${height - (y - minY)}`).join(' ')
