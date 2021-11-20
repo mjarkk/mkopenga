@@ -3,50 +3,53 @@ const { readFileSync, writeFileSync } = require('fs')
 let maxY, maxX, minY, minX
 let lines = []
 
-const drawLine = (areaSubset) =>
-    lines.push(areaSubset.map(([lat, lng]) => {
-        const y = lng * 100
-        const x = lat * 100
+const drawLine = (areaSubset, thickness, id) =>
+    lines.push({
+        line: areaSubset.map(([lat, lng]) => {
+            const y = lng * 100
+            const x = lat * 100
 
-        if (maxY === undefined || y > maxY) { maxY = y }
-        if (minY === undefined || y < minY) { minY = y }
-        if (maxX === undefined || x > maxX) { maxX = x }
-        if (minX === undefined || x < minX) { minX = x }
+            if (maxY === undefined || y > maxY) { maxY = y }
+            if (minY === undefined || y < minY) { minY = y }
+            if (maxX === undefined || x > maxX) { maxX = x }
+            if (minX === undefined || x < minX) { minX = x }
 
-        return { x, y }
-    }))
+            return { x, y }
+        }),
+        thickness,
+        id,
+    })
 
-// Get the cords
+// insert the the lines of the eu countries, dutch provinces and groningen city
+const countriesThickness = 20
 JSON.parse(readFileSync('./europe-countries.geojson')).features.map(f => {
     f.geometry.coordinates.map(area => {
         if (typeof area[0][0][0] == 'number') {
-            area.map(areaSubset => {
-                drawLine(areaSubset)
-            })
+            area.map(areaSubset => drawLine(areaSubset, countriesThickness, 'europe_countries'))
         } else {
             throw 'heu?'
         }
     })
 })
 
+const dutchProvincesThickness = 5
 JSON.parse(readFileSync('./correct-provinces-netherlands.geojson')).features.map(f => {
     f.geometry.coordinates.map(area => {
         if (typeof area[0][0] == 'number') {
-            drawLine(area)
+            drawLine(area, dutchProvincesThickness)
         } else if (typeof area[0][0][0] == 'number') {
-            area.map(areaSubset => {
-                drawLine(areaSubset)
-            })
+            area.map(areaSubset => drawLine(areaSubset, dutchProvincesThickness, 'dutch_provinces'))
         } else {
             throw 'heu?'
         }
     })
 })
 
+const groningenThickness = 2
 JSON.parse(readFileSync('./groningen.geojson')).features.map(f => {
     f.geometry.coordinates.map(area => {
         if (typeof area[0][0] == 'number') {
-            drawLine(area)
+            drawLine(area, groningenThickness, 'groningen_city')
         } else {
             throw 'heu?'
         }
@@ -82,7 +85,7 @@ const blackListedAreasIfSmall = {
     right: maxX - rightBlackListedOuterSize,
 }
 
-lines = lines.filter(line => {
+lines = lines.filter(({ line }) => {
     let areas = line.length < 40 ? blackListedAreasIfSmall : blackListedAreas
     return !line.some(({ x, y }) => y < areas.top || y > areas.bottom || x < areas.left || x > areas.right)
 })
@@ -94,16 +97,12 @@ minY = undefined
 maxX = undefined
 minX = undefined
 
-lines = lines.map(line =>
-    line.map(point => {
-        const { x, y } = point
-
+lines.map(({ line }) =>
+    line.map(({ x, y }) => {
         if (maxY === undefined || y > maxY) { maxY = y }
         if (minY === undefined || y < minY) { minY = y }
         if (maxX === undefined || x > maxX) { maxX = x }
         if (minX === undefined || x < minX) { minX = x }
-
-        return point
     })
 )
 
@@ -112,9 +111,18 @@ width = maxX - minX
 
 // Create the svg file
 
-const linesStrings = lines.map(line => {
-    const points = line.map(({ x, y }) => `${x - minX},${height - (y - minY)}`).join(' ')
-    return `<polyline points="${points}" style="fill:none;stroke:black;stroke-width:3" />`
+const lineGroups = lines.reduce((acc, line) => {
+    if (acc[line.id] === undefined) { acc[line.id] = [line] }
+    else acc[line.id].push(line)
+    return acc
+}, {})
+
+const linesStrings = Object.entries(lineGroups).map(([id, lines]) => {
+    const groupContent = lines.map(({ line, thickness }) => {
+        const points = line.map(({ x, y }) => `${x - minX},${height - (y - minY)}`).join(' ')
+        return `<polyline points="${points}" style="fill:none;stroke:black;stroke-width:${thickness}" />`
+    }).join('\n')
+    return `<g id="${id}">${groupContent}</g>`
 }).join('\n')
 
 const svgFileContent = `<svg version="1.1"
