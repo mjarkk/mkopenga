@@ -1,13 +1,9 @@
 import Head from 'next/head';
 import map from '../geodata/map.json'
 
-interface Line {
-    id: string
+interface Group {
     thickness: number
-    line: Array<{
-        x: number
-        y: number
-    }>
+    lines: Array<string>
 }
 
 interface MapT {
@@ -17,11 +13,11 @@ interface MapT {
     maxX: number
     minY: number
     minX: number
-    lineGroups: { [key: string]: Array<Line> }
+    lineGroups: { [key: string]: Group }
 }
 
 export default function Test() {
-    const { height, width, minY, minX, lineGroups } = map as MapT
+    const { height, width, lineGroups } = map as MapT
 
     return (
         <div>
@@ -37,13 +33,12 @@ export default function Test() {
                 width={width}
                 xmlns="http://www.w3.org/2000/svg"
             >
-                {Object.entries(lineGroups).map(([key, lines]) =>
+                {Object.entries(lineGroups).map(([key, { thickness, lines }]) =>
                     <g key={key} id={key}>
-                        {lines.map(({ line, thickness }, key) => {
-                            const points = line.map(({ x, y }) => `${x - minX},${height - (y - minY)}`).join(' ')
+                        {lines.map((line, key) => {
                             return <polyline
                                 key={key}
-                                points={points}
+                                points={line}
                                 style={{
                                     fill: 'none',
                                     stroke: 'black',
