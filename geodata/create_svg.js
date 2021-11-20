@@ -36,7 +36,7 @@ const dutchProvincesThickness = 5
 JSON.parse(readFileSync('./correct-provinces-netherlands.geojson')).features.map(f => {
     f.geometry.coordinates.map(area => {
         if (typeof area[0][0] == 'number') {
-            drawLine(area, dutchProvincesThickness)
+            drawLine(area, dutchProvincesThickness, 'dutch_provinces')
         } else if (typeof area[0][0][0] == 'number') {
             area.map(areaSubset => drawLine(areaSubset, dutchProvincesThickness, 'dutch_provinces'))
         } else {
@@ -120,6 +120,10 @@ const lineGroups = lines.reduce((acc, line) => {
 writeFileSync('./map.json', JSON.stringify({
     height,
     width,
+    maxY,
+    maxX,
+    minY,
+    minX,
     lineGroups,
 }), { encoding: 'utf8' })
 
