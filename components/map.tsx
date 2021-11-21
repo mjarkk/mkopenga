@@ -25,40 +25,37 @@ export default function Map() {
         groningen_city: { thickness: 1 },
     }
 
-    useEffect(() => {
-        const now = new Date()
-        const startT = now.getTime()
-        now.setSeconds(now.getSeconds() + 5)
-        const endT = now.getTime()
-        const diffT = endT - startT
-        const svgEl = document.querySelector('svg')
+    // useEffect(() => {
+    //     const now = new Date()
+    //     const startT = now.getTime()
+    //     now.setSeconds(now.getSeconds() + 5)
+    //     const endT = now.getTime()
+    //     const diffT = endT - startT
+    //     const svgEl = document.querySelector('svg')
 
-        let doThing;
-        doThing = () => requestAnimationFrame(() => {
-            const t = (new Date()).getTime()
-            if (t < endT) {
-                const newScale = (1 - .006) / diffT * (t - startT) + .006
-                console.log(newScale)
-                // svgEl.style.transform = `scale(${newScale}, ${newScale})`
-                doThing?.()
-            } else {
-                console.log(1)
-                // svgEl.style.transform = 'scale(1, 1)'
-            }
-        })
-        doThing()
-        return () => doThing = undefined
-    }, [])
+    //     let doThing;
+    //     doThing = () => requestAnimationFrame(() => {
+    //         const t = (new Date()).getTime()
+    //         if (t < endT) {
+    //             const newScale = (1 - .006) / diffT * (t - startT) + .006
+    //             console.log(newScale)
+    //             // svgEl.style.transform = `scale(${newScale}, ${newScale})`
+    //             doThing?.()
+    //         } else {
+    //             console.log(1)
+    //             // svgEl.style.transform = 'scale(1, 1)'
+    //         }
+    //     })
+    //     doThing()
+    //     return () => doThing = undefined
+    // }, [])
 
     return (
-        <div className="svgContainer">
+        <div className="container">
             <svg
-                style={{
-                    transform: `scale(.006, .006)`,
-                }}
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox={`0 0 ${width} ${height} `}
+                viewBox={`${width * .299} ${height * .299} ${width * .3} ${height * .3} `}
             >
                 {Object.entries(lineGroups).map(([key, { lines }]) => {
                     const { thickness } = configMap[key]
@@ -81,31 +78,12 @@ export default function Map() {
             </svg>
 
             <style jsx>{`
-                .svgContainer {
-                    position: fixed;
-                    width: 20000vw;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-48.08%, -46.58%);
+                .container {
                 }
                 svg {
-                    width: 100%;
-                    transform-origin: 48.1% 46.6%;
-                    transition: transform 0.1s;
-                    /*
-                        animation-name: example;
-                        animation-duration: 3s;
-                        animation-iteration-count: infinite;
-                        animation-timing-function: cubic-bezier(.3,0,1,.9);
-                    */
-                }
-                @keyframes example {
-                    from {
-                        transform: scale(.006, .006);
-                    }
-                    to {
-                        transform: scale(1, 1);
-                    }
+                    position: fixed;
+                    width: 100vw;
+                    height: 100vh;
                 }
             `}</style>
         </div>
