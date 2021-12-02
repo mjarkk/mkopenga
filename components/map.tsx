@@ -1,7 +1,7 @@
 import p5 from 'p5'
 import { useEffect, useRef } from 'react'
 import mapImport from '../geodata/map.json'
-const map = mapImport as MapT
+const map = mapImport as unknown as MapT
 
 interface Group {
     thickness: number
