@@ -83,7 +83,7 @@ function p5Body(s: p5) {
     s.setup = () => {
         console.clear()
         s.createCanvas(s.windowWidth, s.windowHeight)
-        s.noLoop()
+        // s.noLoop()
         setPointsToDraw()
     }
 
