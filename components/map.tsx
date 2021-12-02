@@ -36,13 +36,13 @@ function p5Body(s: p5) {
     const setPointsToDraw = () => {
         const drawFromTilMap: { [key: string]: [number, number, number] } = {
             europe_countries: [0, 4, 20],
-            dutch_provinces: [10, 40, 100],
+            dutch_provinces: [10, 25, 100],
             groningen_city: [30, 50, 100],
         }
         const diffMap: { [key: string]: [number, number] } = { // high diff, low diff
             europe_countries: [.02, .08],
             dutch_provinces: [.01, .02],
-            groningen_city: [.002, .004],
+            groningen_city: [.003, .003],
         }
 
         const mapToScreenRatio = s.height / map.height
