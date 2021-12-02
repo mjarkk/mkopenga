@@ -6,8 +6,8 @@ let lines = []
 const drawLine = (areaSubset, thickness, id) =>
     lines.push({
         line: areaSubset.map(([lat, lng]) => {
-            const y = lng * 100
-            const x = lat * 100
+            const y = lng
+            const x = lat
 
             if (maxY === undefined || y > maxY) { maxY = y }
             if (minY === undefined || y < minY) { minY = y }
@@ -90,7 +90,7 @@ lines = lines.filter(({ line }) => {
     return !line.some(({ x, y }) => y < areas.top || y > areas.bottom || x < areas.left || x > areas.right)
 })
 
-// Recalculate max, min, height and width as they are now diffrent after the lines filtering
+// Recalculate max, min, height and width as they are now different after the lines filtering
 
 maxY = undefined
 minY = undefined
@@ -114,7 +114,7 @@ width = maxX - minX
 const lineGroups = lines.reduce((acc, entry) => {
     const { id, line, thickness } = entry
 
-    const points = line.map(({ x, y }) => `${x - minX},${height - (y - minY)}`).join(' ')
+    const points = line.map(({ x, y }) => [x - minX, height - (y - minY)])
 
     if (acc[id] === undefined) { acc[id] = { lines: [points], thickness } }
     else acc[id].lines.push(points)
@@ -132,14 +132,15 @@ writeFileSync('./map.json', JSON.stringify({
 
 const linesStrings = Object.entries(lineGroups).map(([id, { lines, thickness }]) => {
     const groupContent = lines.map((points) => {
-        return `<polyline points="${points}" style="fill:none;stroke:black;stroke-width:${thickness}" />`
+        const pointsStr = points.map(([x, y]) => `${x * 100},${y * 100}`).join(' ')
+        return `<polyline points="${pointsStr}" style="fill:none;stroke:black;stroke-width:${thickness}" />`
     }).join('\n')
     return `<g id="${id}">${groupContent}</g>`
 }).join('\n')
 
 const svgFileContent = `<svg version="1.1"
-    height="${height}"
-    width="${width}"
+    height="${height * 100}"
+    width="${width * 100}"
     xmlns="http://www.w3.org/2000/svg">
 ${linesStrings}
 </svg>`
