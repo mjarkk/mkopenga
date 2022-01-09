@@ -124,7 +124,28 @@ export default function Map({
             s.redraw()
         }
 
+        let scrollZoomLvl = 0
         s.mouseWheel = () => {
+            const attachmentEl = ref.current as HTMLElement
+            const { height, top } = attachmentEl.getBoundingClientRect()
+            const halfHeight = height / 2
+            const windowHeight = window.innerHeight
+            const halfWindowHeight = windowHeight / 2
+            const screenOffsetFromMiddle = halfHeight + top - halfWindowHeight
+
+            let offset = screenOffsetFromMiddle + halfHeight
+            if (offset < 0) {
+                offset = 0
+            } else if (offset > height) {
+                offset = height
+            }
+
+            const newScrollZoomLvl = 100 - (100 / height * offset)
+            if (scrollZoomLvl == newScrollZoomLvl) {
+                // Do not re-render is zoom level did not change
+                return
+            }
+            scrollZoomLvl = newScrollZoomLvl
             s.redraw()
         }
 
@@ -142,27 +163,14 @@ export default function Map({
             s.stroke(strokeColor[0], strokeColor[1], strokeColor[2])
             s.strokeWeight(3)
 
-            let zoom = 1 // between 1 and 100
+            let zoom = 1
             if (scroll) {
-                const attachmentEl = ref.current as HTMLElement
-                const { height, top } = attachmentEl.getBoundingClientRect()
-                const halfHeight = height / 2
-                const windowHeight = window.innerHeight
-                const halfWindowHeight = windowHeight / 2
-                const screenOffsetFromMiddle = halfHeight + top - halfWindowHeight
-
-                let offset = screenOffsetFromMiddle + halfHeight
-                if (offset < 0) {
-                    offset = 0
-                } else if (offset > height) {
-                    offset = height
-                }
-
-                zoom = calcZoom(100 - (100 / height * offset))
+                zoom = calcZoom(scrollZoomLvl)
                 if (zoom > 100) {
                     zoom = 100
                 }
             } else {
+                zoom = 1 // between 1 and 100
                 const time = 20_000 // 20 seconds
                 const zoomLvl = (performance.now() - zoomTimer) % time
                 if (zoomLvl > (time / 2)) {
