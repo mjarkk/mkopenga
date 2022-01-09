@@ -12,7 +12,13 @@ export default function Test() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
 
-            <Map />
+            <Map
+                style={{
+                    height: '100vh',
+                    width: '100vw',
+                    overflow: 'hidden',
+                }}
+            />
 
             <style jsx global>{`
                 * {

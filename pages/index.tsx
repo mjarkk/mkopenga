@@ -1,4 +1,7 @@
-import Head from 'next/head';
+import Head from 'next/head'
+import Dynamic from 'next/dynamic'
+
+const Map = Dynamic(() => import('../components/map'), { ssr: false })
 
 export default function Home() {
     return (
@@ -44,6 +47,12 @@ export default function Home() {
                 backgroundColor="rgb(240, 218, 171)"
                 titleColor="rgb(91, 64, 21)"
                 titleFontSizeVW={17}
+                background={<Map
+                    scroll
+                    style={{ height: '100%' }}
+                    backgroundColor={[240, 218, 171]}
+                    strokeColor={[150, 121, 60]}
+                />}
             >
                 <SectionP>Probably somewhere in <a href="https://www.google.com/maps/place/Groningen/@53.1981098,6.3593701,9.5z/data=!4m5!3m4!1s0x47c9c27b376202ab:0xf24577154131aa51!8m2!3d53.2887213!4d6.7060867">Groningen in the Neterlands</a></SectionP>
             </Section>
@@ -105,23 +114,44 @@ interface SectionProps {
     children?: React.ReactNode
     title: string
     backgroundColor: string
+    background?: React.ReactNode
     titleColor: string
     titleFontSizeVW?: number
 }
 
-export function Section({ titleFontSizeVW, children, title, backgroundColor, titleColor }: SectionProps) {
+export function Section({ titleFontSizeVW, children, title, backgroundColor, titleColor, background }: SectionProps) {
     return (
-        <div className="section" style={{ backgroundColor: backgroundColor }}>
-            <h1 style={{ color: titleColor, fontSize: `min(${titleFontSizeVW || 20}vw, 50vh)` }}>{title}</h1>
-            <div className="content">{children}</div>
+        <div className="sectionContainer" style={{ backgroundColor: backgroundColor }}>
+            <div className="background">{background}</div>
+            <div className="section">
+                <h1
+                    style={{
+                        color: titleColor,
+                        fontSize: `min(${titleFontSizeVW || 20}vw, 50vh)`,
+                    }}
+                >{title}</h1>
+                <div className="content">{children}</div>
+            </div>
             <style jsx>{`
                 h1 {
                     font-family: 'Kanit', sans-serif;
-                    font-wieght: 900;
+                    font-weight: 900;
                     line-height: 1;
                     margin: 0 max(-5vh, -4vw);
                 }
+                .sectionContainer {
+                    display: grid;
+                }
+                .sectionContainer > * {
+                    grid-column: 1;
+                    grid-row: 1;
+                    box-sizing: border-box;
+                }
+                .background {
+                    z-index: 1;
+                }
                 .section {
+                    z-index: 2;
                     padding: 20vh 0;
                     min-height: 90vh;
                     box-sizing: border-box;
