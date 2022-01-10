@@ -54,7 +54,7 @@ export default function Home() {
                     strokeColor={[150, 121, 60]}
                 />}
             >
-                <SectionP>Probably somewhere in <a href="https://www.google.com/maps/place/Groningen/@53.1981098,6.3593701,9.5z/data=!4m5!3m4!1s0x47c9c27b376202ab:0xf24577154131aa51!8m2!3d53.2887213!4d6.7060867">Groningen in the Neterlands</a></SectionP>
+                <SectionP>Probably somewhere in <a href="https://www.google.com/maps/place/Groningen/@53.1981098,6.3593701,9.5z/data=!4m5!3m4!1s0x47c9c27b376202ab:0xf24577154131aa51!8m2!3d53.2887213!4d6.7060867">Groningen in the Netherlands</a></SectionP>
             </Section>
 
             <Section
