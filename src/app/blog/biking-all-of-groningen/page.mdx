@@ -71,17 +71,6 @@ As the points are so close together they will quickly start to look like lines w
 I would like to one day change convert these into lines but when you've driven over 1000 times trough 1 street they get a bit messy with GPS points
 so converting those to lines is a bit of a challenge that i'm still thinking about.
 
-## Todos for me
-
-There is currently no way to see what percentage of Groningen i have completed and i'm not yet sure how i should track this.
-Should i even track it is looking at the map enough?
-When do i even consider a street as completed?
-
-When having long streets it should just convert all the points to a single line to reduce the amound of points shown on the map but as said earlier i'm not yet sure how i should do this.
-
-Quicker way to export rides from the [Geo Tracker](https://play.google.com/store/apps/details?id=com.ilyabogdanovich.geotracker) app
-then move them to my PC and run a program to optimize them and commit them to a repo.
-
 ## Technical details
 
 ### Points collector & optimizer
@@ -129,7 +118,7 @@ This is what i'm currently doing.
 Firstly Lets chunk all points in a grid so when doing any sort of comparing we can reduce the amount of points we need to compare and we can probably multithread this.
 
 The area size is about 100m \* 100m but don't pin me on this it was a bit of trail and error to find the best size compared to the number of chunks.
-Thankfully i live around 53 away from the equator so using squares to chunk cordinates "looks" quite square,
+Thankfully i live around 53 degrees away from the equator so using squares based on the lat lon system to chunk cordinates "looks" quite square on a sphere earth,
 the lat and log cordinates system projects nicely on a rectangle map but when moving this system to a sphere the distance between 2 points is not the same everywhere hence why things as the [Haversine formula](https://en.wikipedia.org/wiki/Haversine_formula) exists.
 
 So now that i've placed all the points in a grid i can start to optimize every chunk.
@@ -141,3 +130,14 @@ For every chunk i'm making a new list of points for the chunk.
 For every point in the chunk i check i compare them to all other points in the new list and if the distance between the 2 points is less than 5 meter i skip the point.
 
 This process is executed in a thread pool within 300ms on my ryzen 16 core cpu.
+
+## Todos for me
+
+There is currently no way to see what percentage of Groningen i have completed and i'm not yet sure how i should track this.
+Should i even track it is looking at the map enough?
+When do i even consider a street as completed?
+
+When having long streets it should just convert all the points to a single line to reduce the amound of points shown on the map but as said earlier i'm not yet sure how i should do this.
+
+Quicker way to export rides from the [Geo Tracker](https://play.google.com/store/apps/details?id=com.ilyabogdanovich.geotracker) app
+then move them to my PC and run a program to optimize them and commit them to a repo.
