@@ -35,7 +35,7 @@ h1, h2, h3, h4 {
   @apply text-stone-300;
 }
 
-h3::before, h2::before, h1::before {
+h3::before, h2::before, h1::before, h4::before {
   font-variation-settings: "MONO" 0, "CASL" 0.5, "wght" 700, "slnt" 0, "CRSV" 0;
   font-size: .7em;
   @apply text-stone-500;
@@ -68,10 +68,29 @@ h3:not(.no-prefix)::before {
   content: '### ';
 }
 
+h4 {
+  margin-bottom: .2rem;
+  font-size: 1.5rem;
+}
+
+h4:not(.no-prefix)::before {
+  content: '#### ';
+}
+
 a {
   text-decoration: underline;
   @apply decoration-stone-500;
   @apply transition-colors bg-stone-900 hover:bg-stone-700;
+}
+
+ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+ul {
+  list-style-type: circle;
+  list-style-position: inside;
 }
 
 @media only screen and (max-width: 800px) {
@@ -79,7 +98,6 @@ a {
     font-size: 4rem;
   }
 }
-
 
 @media only screen and (max-width: 580px) {
   h1 {
@@ -90,5 +108,8 @@ a {
   }
   h3 {
     font-size: 1.8rem;
+  }
+  h4 {
+    font-size: 1.3rem;
   }
 }

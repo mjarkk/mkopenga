@@ -71,10 +71,11 @@ As the points are so close together they will quickly start to look like lines w
 I would like to one day change convert these into lines but when you've driven over 1000 times trough 1 street they get a bit messy with GPS points
 so converting those to lines is a bit of a challenge that i'm still thinking about.
 
-## TODO
+## Todos for me
 
 There is currently no way to see what percentage of Groningen i have completed and i'm not yet sure how i should track this.
-Should i even track it is looking at the map enough maybe?
+Should i even track it is looking at the map enough?
+When do i even consider a street as completed?
 
 When having long streets it should just convert all the points to a single line to reduce the amound of points shown on the map but as said earlier i'm not yet sure how i should do this.
 
@@ -83,4 +84,60 @@ then move them to my PC and run a program to optimize them and commit them to a 
 
 ## Technical details
 
-_TODO_
+### Points collector & optimizer
+
+My goals here are a few tings
+
+1. Collect all the points and place them into a single file so the poor browser doesn't have todo all the work
+2. Reduce the shitload amount of points that is collected without losing _(too much)_ detail on the map
+
+#### First gloal
+
+That one is mostly easy.
+It basicly comes down to reading a hunders of .GPX files with thousands of points,
+collecting these points and writing them to a single file.
+
+For some reason it's "slow" to read xml files and it usually took around 30 seconds to read all the .GPX files and this will only become
+slower once i start riding my bike more because of this project so this was a no go for me.
+
+I've done a few things to speedup the GPX file reading process.
+
+Switch from a [Deno](https://deno.com/) _(javascript)_ script to a [Rust](https://www.rust-lang.org/) script
+tough nowadays i would more call it a program.
+
+This wiredly did not improve the speed of reading the GPX file much tough i was using a [specialized lib for reading GPX files](https://crates.io/crates/gpx).
+
+So the next thing i tried was repacing the gpx rust lib with a fast xml reader named [quick-xml](https://crates.io/crates/quick-xml)
+and that did indeed improve the speed of reading the GPX files by i would say 50%.
+
+Tough still i was not happy why should reading about 1 million _(more like 3 nowadays)_ lines of xml take 15 seconds??
+
+So i started looking at multithreading using a thread pool and holyshit that made a difference.
+After this changed it took about 350ms on my ryzen 16 core cpu to read all the GPX files and around another 50ms to write the results to disk.
+
+TL;DR:
+
+1. Switch from Javascript to Rust
+2. Switch from a [GPX file reading lib](https://crates.io/crates/gpx) to a [fast XML reading lib](https://crates.io/crates/quick-xml)
+3. Use [multithreading](https://doc.rust-lang.org/std/thread/fn.spawn.html) using a [thread pool](https://en.wikipedia.org/wiki/Thread_pool) to read the GPX files
+
+#### Second goal
+
+This one requires some thinking from the start.
+This is what i'm currently doing.
+
+Firstly Lets chunk all points in a grid so when doing any sort of comparing we can reduce the amount of points we need to compare and we can probably multithread this.
+
+The area size is about 100m \* 100m but don't pin me on this it was a bit of trail and error to find the best size compared to the number of chunks.
+Thankfully i live around 53 away from the equator so using squares to chunk cordinates "looks" quite square,
+the lat and log cordinates system projects nicely on a rectangle map but when moving this system to a sphere the distance between 2 points is not the same everywhere hence why things as the [Haversine formula](https://en.wikipedia.org/wiki/Haversine_formula) exists.
+
+So now that i've placed all the points in a grid i can start to optimize every chunk.
+
+I'm doing the following things to optimize a chunk.
+
+For every chunk i'm making a new list of points for the chunk.
+
+For every point in the chunk i check i compare them to all other points in the new list and if the distance between the 2 points is less than 5 meter i skip the point.
+
+This process is executed in a thread pool within 300ms on my ryzen 16 core cpu.
