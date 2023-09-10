@@ -19,7 +19,10 @@ export default function Home() {
       <div className="mb-6">
         <h2>Blog</h2>
         <p>
-          <Link href="/blog/favorite-media">blog/favorite-media</Link>
+          <Link href="/blog/biking-all-of-groningen">/blog/biking-all-of-groningen</Link>
+        </p>
+        <p>
+          <Link href="/blog/favorite-media">/blog/favorite-media</Link>
         </p>
       </div>
     </div>

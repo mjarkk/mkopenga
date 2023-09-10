@@ -22,6 +22,7 @@ export function MediaTag({ href, youtubeAt, title, description, logoSrc, lang }:
                 width={80}
                 className="rounded-full mt-1"
                 src={logoSrc}
+                loading="lazy"
             /></a>
             {lang ? <div className="flex justify-center">
                 <div className="mt-2 inline-block text-sm bg-stone-700 px-[10px] py-[3px] rounded-full">

@@ -18,7 +18,7 @@ export default function Layout({
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
                 <link href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..800,0..1,0..1,0..1&display=swap" rel="stylesheet" />
             </head>
-            <body>
+            <body style={{ maxWidth: '1500px' }}>
                 <Link href="/">Home</Link>
                 {children}
             </body>
