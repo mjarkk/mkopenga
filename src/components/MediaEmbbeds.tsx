@@ -31,8 +31,8 @@ export function MediaTag({ href, youtubeAt, title, description, logoSrc, lang }:
             </div> : undefined}
         </div>
         <div>
-            <a href={href} className="inline-block transition-colors bg-stone-900 hover:bg-stone-700 decoration-stone-500">
-                <h3>{title}</h3>
+            <a href={href} className="inline-block">
+                <h3 className="no-prefix">{title}</h3>
             </a>
             {description ?
                 <p className="italic">"{description}"</p>
