@@ -100,6 +100,9 @@ ul {
 }
 
 @media only screen and (max-width: 580px) {
+  body {
+    padding: 1rem;
+  }
   h1 {
     font-size: 3rem;
   }
