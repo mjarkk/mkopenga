@@ -1,0 +1,86 @@
+import Image from "next/image";
+import { LeftRight } from "@/components/LeftRight";
+
+# Biking all of Groningen
+
+_What i've driven so far, (yellow are the roads where i've been)_
+
+![map image](/biking_map.webp "map image")
+
+Somewhere in 2023 i tought it was a great idea to ride trough EVERY street in the city of Groningen.
+
+Since i have a bike with the [Bosch smart system](https://www.bosch-ebike.com/us/products/the-smart-system) the app for my bike tracks all rides.
+It has wondered me for years already how manny streets do i actually visit of the city where i live.
+
+So after a long time thinking about it i finally decided to import all rides into a map and see where i've written.
+To my disapointment i discoverd that i've bearly seen any of the city i live in.
+
+Since then i've started to ride trough the city and try to visit as manny streets as possible.
+
+## Tracking rides
+
+At first i used the [Bosch Flow App](https://www.bosch-ebike.com/us/products/ebike-flow-app) but i've found a few problems with it tracking my rides.
+
+The first problem is that exporting the rides is very annoying.. I need to export every ride one by one and it takes around 10 taps to export a single ride to my Google Drive.
+I would like to export rides to my phone's storage but the [Bosch Flow App](https://www.bosch-ebike.com/us/products/ebike-flow-app) only allows me to export rides to a Cloud Storage like why 😠.
+
+Another problem is that i'm limited to tracking when i'm riding my bike, as my end goal is to have visited all of Groningen i must walk some part and i cannot do that with the [Bosch Flow App](https://www.bosch-ebike.com/us/products/ebike-flow-app).
+
+Beside these practical problems i also discoverd that the tracking rate is quite slow (I think it records a tracking point every 5 seconds) and for small streets i might be quicker trought the street than the App adds a tracking location.
+
+So after some time trying other apps i discoverd [Geo Tracker](https://play.google.com/store/apps/details?id=com.ilyabogdanovich.geotracker) the most generic name every i know
+but the app seems to respect my privacy and have all the options i ever need for tracking my rides.
+I've bought their the pro subscription for 0.60 euro's a month so i can use the [MapBox maps](https://www.mapbox.com/) within the app over Google their maps as i like their style more.
+
+<LeftRight
+    rightWidth="50%"
+    right={<>
+        <img src="/tracking_rides_screen.webp" alt="Tracking rides screenshot" width="400px" loading="lazy" />
+    </>}
+>
+
+### How do i ride?
+
+I use Android's split screen function to place a screenshot of where i've been and the
+[Geo Tracker](https://play.google.com/store/apps/details?id=com.ilyabogdanovich.geotracker) below to see where i'm currently riding.
+
+This is not an ideal setup as apps get very very very small when using split screen.
+I might have a big phone [Google Pixel 7](https://www.gsmarena.com/google_pixel_7-11903.php) but still it kinda works.
+
+I don't use a phone mount on my bike i rather just have my phone in my pocket and pull it out every second street to see where i should go.
+
+There is also the problem that i'm a cheap boii and i have a pre paid sim card so internet on the road is basicly not a thing for me.
+So maps need to be available offline. Mapbox seems to not have offline support but when pre zooming in at home with wifi the map seems to be cached and i can use it offline.
+
+</LeftRight>
+
+## Showing all my rides on a map
+
+This was a challenge and futer below i will get to the technical details but first i will explain in a broad way how i do it.
+
+I firstly export all my rides in the [Geo Tracker](https://play.google.com/store/apps/details?id=com.ilyabogdanovich.geotracker) app to [GPX files](https://en.wikipedia.org/wiki/GPS_Exchange_Format).
+
+Then i move the files to my desktop using [LocalSend](https://localsend.org/#/).
+
+On my PC i run a program over all the [GPX files](https://en.wikipedia.org/wiki/GPS_Exchange_Format) and convert them to a single csv file with all location points i've ever been.
+This program also remove points that are close very close to each other for example 2 points that are within 1 meter distance of each other do not really make a difference on a map so close together points get removed.
+
+I've made a website that uses [MapBox](https://www.mapbox.com/) to show a map and overlay the points using their APIs.
+
+As the points are so close together they will quickly start to look like lines when zoomed out, see the image above for an example.
+I would like to one day change convert these into lines but when you've driven over 1000 times trough 1 street they get a bit messy with GPS points
+so converting those to lines is a bit of a challenge that i'm still thinking about.
+
+## TODO
+
+There is currently no way to see what percentage of Groningen i have completed and i'm not yet sure how i should track this.
+Should i even track it is looking at the map enough maybe?
+
+When having long streets it should just convert all the points to a single line to reduce the amound of points shown on the map but as said earlier i'm not yet sure how i should do this.
+
+Quicker way to export rides from the [Geo Tracker](https://play.google.com/store/apps/details?id=com.ilyabogdanovich.geotracker) app
+then move them to my PC and run a program to optimize them and commit them to a repo.
+
+## Technical details
+
+_TODO_

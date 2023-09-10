@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --gap: 4px;
-  --inner-bg: black;
-  --bg: #f5f3ff;
-  --text-color: black;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -16,50 +9,47 @@
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-variation-settings: "MONO" 0, "CASL" 0, "wght" 400, "slnt" 0, "CRSV" 0.5;
+  font-family: 'Recursive', sans-serif;
   font-size: 18x;
   background-color: var(--bg);
   color: var(--text-color);
+  padding: 3rem;
+  @apply text-white;
+  @apply bg-stone-900;
+}
+
+p {
+  padding-bottom: .7rem;
+}
+
+.italic, em, i {
+  font-style: italic;
+  font-variation-settings: "slnt" -10;
+
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Handlee', cursive;
+  font-variation-settings: "MONO" 0.6, "CASL" 0.5, "wght" 700, "slnt" 0, "CRSV" 0;
+  font-family: 'Recursive', monospace;
+  @apply text-stone-300;
 }
 
 h1 {
-  font-size: 4rem;
+  margin-bottom: 1rem;
+  font-size: 5rem;
 }
 
 h2 {
+  margin-bottom: .6rem;
   font-size: 3rem;
 }
 
 h3 {
+  margin-bottom: .2rem;
   font-size: 2rem;
 }
 
 a {
   text-decoration: underline;
-}
-
-@media (max-width: 730px) or (max-height: 600px) {
-  h1 {
-    font-size: 3rem;
-  }
-
-  h2 {
-    font-size: 2rem;
-  }
-
-  h3 {
-    font-size: 1.6rem;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --inner-bg: #020617;
-    --bg: #020617;
-    --text-color: white;
-  }
 }
