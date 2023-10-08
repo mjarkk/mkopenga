@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { LeftRight } from "@/components/LeftRight";
+import { PointsOptimalization } from "./PointsOptimalization";
 
 # Biking all of Groningen
 
@@ -112,6 +113,13 @@ TL;DR:
 
 #### Second goal
 
+<LeftRight
+    rightWidth="50%"
+    right={<>
+        <PointsOptimalization />
+    </>}
+>
+
 This one requires some thinking from the start.
 This is what i'm currently doing.
 
@@ -130,6 +138,8 @@ For every chunk i'm making a new list of points for the chunk.
 For every point in the chunk i check i compare them to all other points in the new list and if the distance between the 2 points is less than 5 meter i skip the point.
 
 This process is executed in a thread pool within 300ms on my ryzen 16 core cpu.
+
+</LeftRight>
 
 ## Todos for me
 
