@@ -91,6 +91,7 @@ ol {
 ul {
   list-style-type: circle;
   list-style-position: inside;
+  margin-bottom: 1rem;
 }
 
 @media only screen and (max-width: 800px) {
