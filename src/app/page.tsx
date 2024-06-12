@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -13,18 +13,35 @@ export default function Home() {
       </div>
       <div className="mb-6">
         <h2>Contact</h2>
-        <p>Email me at <a className='' href="mailto:mkopenga@gmail.com">mkopenga@gmail.com</a></p>
-        <p>Visit me somewhere in <a className='' href="https://www.google.nl/maps/place/Groningen">Groningen</a></p>
+        <p>
+          Email me at{" "}
+          <a className="" href="mailto:mkopenga@gmail.com">
+            mkopenga@gmail.com
+          </a>
+        </p>
+        <p>
+          Visit me somewhere in{" "}
+          <a className="" href="https://www.google.nl/maps/place/Groningen">
+            Groningen
+          </a>
+        </p>
       </div>
       <div className="mb-6">
         <h2>Blog</h2>
         <p>
-          <Link href="/blog/biking-all-of-groningen">/blog/biking-all-of-groningen</Link>
+          <Link href="/blog/biking-all-of-groningen">
+            /blog/Biking all of groningen
+          </Link>
         </p>
         <p>
-          <Link href="/blog/favorite-media">/blog/favorite-media</Link>
+          <Link href="/blog/favorite-media">/blog/Favorite media</Link>
+        </p>
+        <p>
+          <Link href="/blog/usb-c-to-displayport">
+            /blog/Hunt for USB C to Displayport
+          </Link>
         </p>
       </div>
     </div>
-  )
+  );
 }
