@@ -9,22 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mdx-js/loader": "^2.3.0",
-    "@mdx-js/react": "^2.3.0",
-    "@next/mdx": "^13.4.19",
-    "@types/node": "^20.5.9",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7",
-    "animejs": "^3.2.1",
-    "autoprefixer": "^10.4.15",
-    "next": "^13.4.19",
-    "postcss": "^8.4.29",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2"
+    "@mdx-js/loader": "^3.0.1",
+    "@mdx-js/react": "^3.0.1",
+    "@next/mdx": "^14.2.4",
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "animejs": "^3.2.2",
+    "autoprefixer": "^10.4.19",
+    "next": "^14.2.4",
+    "postcss": "^8.4.39",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.2"
   },
   "devDependencies": {
-    "@types/animejs": "^3.1.8"
+    "@types/animejs": "^3.1.12"
   }
 }

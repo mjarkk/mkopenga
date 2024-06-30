@@ -12,8 +12,6 @@ body {
   font-variation-settings: "MONO" 0, "CASL" 0, "wght" 400, "slnt" 0, "CRSV" 0.5;
   font-family: 'Recursive', sans-serif;
   font-size: 18x;
-  background-color: var(--bg);
-  color: var(--text-color);
   padding: 3rem;
   @apply text-white;
   @apply bg-stone-900;
